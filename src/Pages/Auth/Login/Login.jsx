@@ -7,9 +7,10 @@ import Link from "@/Pages/Layouts/Components/Link";
 import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
 import Form from "@/Pages/Layouts/Components/Form";
+import { login } from "@/Utils/Apis/AuthApi";
 
 import { dummyUser } from "@/Data/Dummy";
-import { toastError, toastSuccess } from "../../../Utils/Helpers/ToastHelpers";
+import { toastError, toastSuccess } from "@/Utils/Helpers/ToastHelpers";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,19 +23,20 @@ const Login = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const { email, password } = form;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { email, password } = form;
+  try {
+    const user = await login(email, password);
+    localStorage.setItem("user", JSON.stringify(user));
+    toastSuccess("Login berhasil");
+    navigate("/admin/dashboard");
+  } catch (err) {
+    toastError(err.message);
+  }
+};
 
-    if (email === dummyUser.email && password === dummyUser.password) {
-      localStorage.setItem("user", JSON.stringify(dummyUser));
-      toastSuccess("Login berhasil!");
-      navigate("/admin/dashboard");
-    } else {
-      toastError("Email atau password salah!");
-    }
-  };
 
   return (
     <Card className="max-w-md">

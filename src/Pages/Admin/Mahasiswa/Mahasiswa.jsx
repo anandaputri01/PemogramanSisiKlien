@@ -12,7 +12,8 @@ import {
 } from "@/Utils/Apis/MahasiswaApi";
 
 import { confirmDelete, confirmUpdate } from "@/Utils/Helpers/SwalHelpers";
-import { toastSuccess, toastError } from "@/Utils/Helpers/ToastHelpers";
+import { toastError } from "@/Utils/Helpers/ToastHelpers";
+import Swal from "sweetalert2";
 
 import TableMahasiswa from "./TableMahasiswa";
 import ModalMahasiswa from "./ModalMahasiswa";
@@ -67,17 +68,39 @@ const Mahasiswa = () => {
     if (selectedMahasiswa) {
       confirmUpdate(async () => {
         await updateMahasiswa(selectedMahasiswa.id, formData);
-        toastSuccess("Data berhasil diperbarui");
         setModalOpen(false);
         setSelectedMahasiswa(null);
         fetchMahasiswa();
       });
 
     } else {
-      await storeMahasiswa(formData);
-      toastSuccess("Data berhasil ditambahkan");
-      setModalOpen(false);
-      fetchMahasiswa();
+      // show loading Swal while adding
+      Swal.fire({
+        title: "Menambahkan...",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => Swal.showLoading(),
+      });
+      try {
+        await storeMahasiswa(formData);
+        Swal.fire({
+          title: "Berhasil",
+          text: "Data berhasil ditambahkan",
+          icon: "success",
+          timer: 6000,
+          timerProgressBar: true,
+          showConfirmButton: false,
+        });
+        setModalOpen(false);
+        fetchMahasiswa();
+      } catch (err) {
+        Swal.fire({
+          title: "Gagal",
+          text: "Terjadi kesalahan. Coba lagi.",
+          icon: "error",
+          showConfirmButton: true,
+        });
+      }
     }
 
   } catch (err) {
@@ -88,9 +111,8 @@ const Mahasiswa = () => {
   
   const handleDelete = async (id) => {
     confirmDelete(async () => {
-      await deleteMahasiswa(id);
-      toastSuccess("Data berhasil dihapus");
-      fetchMahasiswa();
+  await deleteMahasiswa(id);
+  await fetchMahasiswa();
     });
   };
 
