@@ -10,9 +10,14 @@ import AdminLayout from "@/Pages/Layouts/AdminLayout";
 import ProtectedRoute from "@/Pages/Layouts/Components/ProtectedRoute";
 
 import Login from "@/Pages/Auth/Login/Login";
+import Register from "@/Pages/Auth/Register/Register";
 import Dashboard from "@/Pages/Admin/Dashboard/Dashboard";
 import Mahasiswa from "@/Pages/Admin/Mahasiswa/Mahasiswa";
 import MahasiswaDetail from "@/Pages/Admin/MahasiswaDetail/MahasiswaDetail";
+import Dosen from "@/Pages/Admin/Dosen/Dosen";
+import DosenDetail from "@/Pages/Admin/Dosen/DosenDetail";
+import MataKuliah from "@/Pages/Admin/MataKuliah/MataKuliah";
+import MataKuliahDetail from "@/Pages/Admin/MataKuliah/MataKuliahDetail";
 import PageNotFound from "@/Pages/PageNotFound";
 
 const router = createBrowserRouter([
@@ -23,6 +28,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
     ],
   },
@@ -52,6 +61,32 @@ const router = createBrowserRouter([
           {
             path: ":id",
             element: <MahasiswaDetail />,
+          },
+        ],
+      },
+      {
+        path: "dosen",
+        children: [
+          {
+            index: true,
+            element: <Dosen />,
+          },
+          {
+            path: ":id",
+            element: <DosenDetail />,
+          },
+        ],
+      },
+      {
+        path: "matakuliah",
+        children: [
+          {
+            index: true,
+            element: <MataKuliah />,
+          },
+          {
+            path: ":id",
+            element: <MataKuliahDetail />,
           },
         ],
       },

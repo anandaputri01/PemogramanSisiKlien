@@ -78,7 +78,7 @@ const handleSubmit = async (e) => {
         </Button>
       </Form>
       <p className="text-sm text-center text-gray-600 mt-4">
-        Belum punya akun? <Link href="#">Daftar</Link>
+        Belum punya akun? <button onClick={() => navigate('/register')} className="text-blue-500 hover:underline">Daftar</button>
       </p>
     </Card>
   );

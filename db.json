@@ -1,4 +1,16 @@
 {
+  "dosen": [
+    {
+      "id": "1",
+      "nama": "Dr. Siti",
+      "nidn": "D11.2020.0001"
+    },
+    {
+      "id": "2",
+      "nama": "Dr. Agus",
+      "nidn": "D11.2020.0002"
+    }
+  ],
   "mahasiswa": [
     {
       "id": "1",
@@ -9,6 +21,18 @@
       "id": "2",
       "nama": "Budi",
       "nim": "A11.2020.00002"
+    }
+  ],
+  "matakuliah": [
+    {
+      "id": "1",
+      "kode": "MK001",
+      "nama": "Algoritma"
+    },
+    {
+      "id": "2",
+      "kode": "MK002",
+      "nama": "Basis Data"
     }
   ],
   "user": [
@@ -23,6 +47,12 @@
       "name": "Mahasiswa 1",
       "email": "mahasiswa@mail.com",
       "password": "mahasiswa123"
+    },
+    {
+      "id": "1638",
+      "name": "Ananda Putri",
+      "email": "ananda@gmail.com",
+      "password": "ananda"
     }
   ]
 }

@@ -4,26 +4,26 @@ import { useParams } from "react-router-dom";
 import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
 
-import { getMahasiswa } from "@/Utils/Apis/MahasiswaApi";
+import { getDosen } from "@/Utils/Apis/DosenApi";
 import { toastError } from "@/Utils/Helpers/ToastHelpers";
 
-const MahasiswaDetail = () => {
-  const { id } = useParams(); // ambil ID dari URL
-  const [mahasiswa, setMahasiswa] = useState(null);
+const DosenDetail = () => {
+  const { id } = useParams();
+  const [dosen, setDosen] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchMahasiswa();
+    fetchDosen();
   }, [id]);
 
-  const fetchMahasiswa = async () => {
+  const fetchDosen = async () => {
     try {
-      const res = await getMahasiswa(id);
-      console.log("Mahasiswa response:", res);
-      setMahasiswa(res.data);
+      const res = await getDosen(id);
+      console.log("Dosen response:", res);
+      setDosen(res.data);
     } catch (err) {
-      console.error("Mahasiswa fetch error:", err);
-      toastError(err?.message || "Gagal mengambil data mahasiswa");
+      console.error("Dosen fetch error:", err);
+      toastError(err?.message || "Gagal mengambil data dosen");
     } finally {
       setLoading(false);
     }
@@ -33,29 +33,29 @@ const MahasiswaDetail = () => {
     return <p className="text-center">Memuat data...</p>;
   }
 
-  if (!mahasiswa) {
-    return <p className="text-center text-red-600">Data mahasiswa tidak ditemukan.</p>;
+  if (!dosen) {
+    return <p className="text-center text-red-600">Data dosen tidak ditemukan.</p>;
   }
 
   return (
     <Card>
       <Heading as="h2" className="mb-4 text-left">
-        Detail Mahasiswa
+        Detail Dosen
       </Heading>
 
       <table className="table-auto text-sm w-full">
         <tbody>
           <tr>
             <td className="py-2 px-4 font-medium">ID</td>
-            <td className="py-2 px-4">{mahasiswa.id}</td>
+            <td className="py-2 px-4">{dosen.id}</td>
           </tr>
           <tr>
-            <td className="py-2 px-4 font-medium">NIM</td>
-            <td className="py-2 px-4">{mahasiswa.nim}</td>
+            <td className="py-2 px-4 font-medium">NIDN</td>
+            <td className="py-2 px-4">{dosen.nidn}</td>
           </tr>
           <tr>
             <td className="py-2 px-4 font-medium">Nama</td>
-            <td className="py-2 px-4">{mahasiswa.nama}</td>
+            <td className="py-2 px-4">{dosen.nama}</td>
           </tr>
         </tbody>
       </table>
@@ -63,4 +63,4 @@ const MahasiswaDetail = () => {
   );
 };
 
-export default MahasiswaDetail;
+export default DosenDetail;
